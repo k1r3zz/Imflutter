@@ -1,5 +1,10 @@
+import 'dart:_http';
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:simpleflutter/MenuPage.dart';
+import 'package:simpleflutter/view/http/HttpUtil.dart';
 import 'package:simpleflutter/view/resources/mColors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,10 +22,26 @@ class loginView_State extends State<loginView> {
     if (usercontroller.text == "123456" && psdcontroller.text == "123456") {
       Navigator.of(context).push(
           new MaterialPageRoute(builder: (context) => new MenuPage()));
+   //   loadData();
     } else {
       print("123333333333333");
     }
   }
+
+  loadData() async {
+    String url = "login/old";
+    FormData formData = new FormData.from(
+        {"username": "S1213", "password": "123456"});
+//    var data = {"username": "S1213", "password": "123456"};
+    var response = await HttpUtil().post(url, data: formData);
+    print(response);
+    setState(() {
+//      var data=json.decode(response.body);
+//      print("12323$response===$data");
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
