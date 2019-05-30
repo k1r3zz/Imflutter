@@ -3,5 +3,6 @@ class Api {
   static String Login = "login/sms";
   static String Sms = "send/sms";
   static String Getbaseurl = "get/base/url";
+  static String GetConversationList = "api/chat/list";
 
 }

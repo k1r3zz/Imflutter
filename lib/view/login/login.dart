@@ -2,12 +2,16 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpleflutter/MenuPage.dart';
 import 'package:simpleflutter/bean/login_bean_entity.dart';
+import 'package:simpleflutter/config/PrefsConfig.dart';
 import 'package:simpleflutter/view/http/Api.dart';
-import 'package:simpleflutter/view/http/HttpUtil.dart';
+import 'package:simpleflutter/view/http/HttpUtils.dart';
 import 'package:simpleflutter/view/resources/mColors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:simpleflutter/widget/SPUntil.dart';
+import 'package:simpleflutter/widget/ToastUntil.dart';
 
 class loginView extends StatefulWidget {
   @override
@@ -19,38 +23,39 @@ class loginView_State extends State<loginView> {
   final psdcontroller = TextEditingController();
 
   void _login() {
-//    if (usercontroller.text == "123456" && psdcontroller.text == "123456") {
-//      Navigator.of(context).push(
-//          new MaterialPageRoute(builder: (context) => new MenuPage()));
-//      loadData();
-//    } else {
-//      print("123333333333333");
-//    }
     loadData();
-
   }
 
   loadData() async {
-    FormData formData =
-        new FormData.from({"username": usercontroller.text, "password": psdcontroller.text});
-    var response = await HttpUtil().post(Api.Loginold, data: formData);
-    Map<String, dynamic> json = response;
-    /*将Json转成实体类*/
-    LoginBeanEntity beanEntity = LoginBeanEntity.fromJson(json);
-    if (beanEntity.code == 200) {
+    FormData formData = new FormData.from(
+        {"username": usercontroller.text, "password": psdcontroller.text});
+
+    await HttpUtil().post(Api.Loginold, (data) {
+      ToastUntil.ToastMsg("登陆成功");
+      SPUntil.setString(PrefsConfig.Token, data["HC_ACCESS_TOKEN"].toString());
       Navigator.of(context)
           .push(new MaterialPageRoute(builder: (context) => new MenuPage()));
-    } else {
-      Fluttertoast.showToast(
-        msg: beanEntity.message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-      );
-    }
-    setState(() {
+    }, errorcallback: (error) {
+      ToastUntil.ToastMsg(error);
+    }, data: formData);
 
-    });
+//    Map<String, dynamic> json = response;
+//    /*将Json转成实体类*/
+//    LoginBeanEntity beanEntity = LoginBeanEntity.fromJson(json);
+//    if (beanEntity.code == 200) {
+//      SharedPreferences prefs = await SharedPreferences.getInstance();
+//      prefs.setString(PrefsConfig.Token, beanEntity.data.hcAccessToken);
+//      Navigator.of(context)
+//          .push(new MaterialPageRoute(builder: (context) => new MenuPage()));
+//    } else {
+//      Fluttertoast.showToast(
+//        msg: beanEntity.message,
+//        toastLength: Toast.LENGTH_SHORT,
+//        gravity: ToastGravity.CENTER,
+//        timeInSecForIos: 1,
+//      );
+//    }
+    setState(() {});
   }
 
   @override
