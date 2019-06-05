@@ -4,5 +4,7 @@ class Api {
   static String Sms = "send/sms";
   static String Getbaseurl = "get/base/url";
   static String GetConversationList = "api/chat/list";
+  static String getContacts = "api/staff/contacts";
+  static String getGroupList = "api/group/my";
 
 }

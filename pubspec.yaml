@@ -27,6 +27,7 @@ dependencies:
   fluttertoast: ^2.1.1
   shared_preferences: ^0.4.2
   sqflite: ^1.1.0
+  cached_network_image: ^0.4.1
 
 dev_dependencies:
   build_runner: ^1.0.0

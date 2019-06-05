@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:simpleflutter/config/PrefsConfig.dart';
+import 'package:simpleflutter/widget/SPUntil.dart';
 
 /*
  * 网络请求封装
@@ -33,10 +35,13 @@ class HttpUtil {
       receiveTimeout: 3000,
       headers: {
         "HC-ACCESS-TOKEN":
-            "czo1OToiMmQ5ZEtLbEViUldlUlBjQlJlREo3ai9rWXhydWFCZFNCZnd4cmp3V3VhOHNGLzUyZ1J4S2d2ZEJ6RDQiOw=="
+        "czo2MDoiY2RjNE41NWl3VkF0RjZXaUxOZk5zUDhLelNzeDVjZGpnSUoxMDhOSGNoWTREbkdIelRKMVdNcGc3akZrIjs="
       },
     );
     dio = new Dio(options);
+  }
+    _getToken() async {
+   return await SPUntil.getString(PrefsConfig.Token);
   }
 
   get(url, Function callback,
