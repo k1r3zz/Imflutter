@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide TabBarView;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:simpleflutter/bean/contact_bean_entity.dart';
 import 'package:simpleflutter/bean/group_bean_entity.dart';
@@ -14,6 +14,7 @@ import 'package:simpleflutter/view/ThirdPage.dart';
 import 'package:simpleflutter/view/http/Api.dart';
 import 'package:simpleflutter/view/http/HttpUtils.dart';
 import 'package:simpleflutter/view/resources/mColors.dart';
+import 'package:simpleflutter/widget/my_tabbar_view.dart';
 
 class MenuPage extends StatefulWidget {
   MenuState createState() => MenuState();
